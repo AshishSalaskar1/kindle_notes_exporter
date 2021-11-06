@@ -1,0 +1,7 @@
+gunicorn==19.9.0
+itsdangerous==1.1.0
+Jinja2==2.11.3
+MarkupSafe==1.1.1
+Werkzeug==0.15.4
+Flask-Cors==3.0.9
+gevent==20.9.0
