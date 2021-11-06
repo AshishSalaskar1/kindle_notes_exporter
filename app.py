@@ -31,4 +31,5 @@ def upload_file():
         # return send_from_directory(directory="output", filename="output.txt")
         return send_file("output/output.txt", as_attachment=True)
 
-app.run()
+if __name__ == '__main__':
+    app.run()
