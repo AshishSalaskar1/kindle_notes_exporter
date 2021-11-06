@@ -33,13 +33,10 @@ def export_notion_file(data, fileName):
     for bookName in bookNames:
         notes = list(set([x[0] for x in data[bookName]]))
         # print(data[bookName])
-        print(*notes,"\n\n\n",sep="\n\n\n")
+        # print(*notes,"\n\n\n",sep="\n\n\n")
         content += ("--- \n\n## **"+bookName.replace("\ufeff","") +"**"+ "\n>" + "\n>\n\n>".join(notes) +"\n\n\n\n")
 
-        print("*-*-*-*-*-*-*"*5)
-    # with open(fileName,'w') as f:
-    #     f.write(content)
+        # print("*-*-*-*-*-*-*"*5)
+    with open(fileName,'w') as f:
+        f.write(content)
 
-
-content = process_books(read_file("output/My_Clippings.txt","=========="))
-export_notion_file(content, "output/output.txt")
