@@ -17,11 +17,12 @@ export_notion_file(noteList, "output.txt")
 
 @app.route('/')
 def hello():
+    print("Hello")
     return render_template('index.html', url=request.base_url)
 
 @app.route('/upload', methods = ['GET', 'POST'])
 def upload_file():
-    print("CALLE")
+    print("CALLED")
     if request.method == 'POST':
         f = request.files['file']
         f.save("output/My_Clippings.txt")
@@ -32,4 +33,5 @@ def upload_file():
         return send_file("output/output.txt", as_attachment=True)
 
 if __name__ == '__main__':
+    print("App started Succesfully")
     app.run()
