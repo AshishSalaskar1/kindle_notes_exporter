@@ -11,9 +11,9 @@ ALLOWED_EXTENSIONS = {'txt'}
 app = Flask(__name__)
 cors = CORS(app)
 
-hiList = read_file(file_name, sep)
-noteList = process_books(hiList)
-export_notion_file(noteList, "output.txt")
+# hiList = read_file(file_name, sep)
+# noteList = process_books(hiList)
+# export_notion_file(noteList, "output.txt")
 
 @app.route('/')
 def hello():
