@@ -2,7 +2,7 @@ import os
 import dateutil.parser
 
 def read_file(file_name, sep):
-    with open(file_name,"r") as f:
+    with open(file_name,"r",encoding="utf8") as f:
         content = f.read().split(sep)
         content = [s.strip() for s in content]
         bookList = [list(filter(lambda x : len(x.strip()) != 0,book.split("\n"))) for book in content]
@@ -37,6 +37,6 @@ def export_notion_file(data, fileName):
         content += ("--- \n\n## **"+bookName.replace("\ufeff","") +"**"+ "\n>" + "\n>\n\n>".join(notes) +"\n\n\n\n")
 
         # print("*-*-*-*-*-*-*"*5)
-    with open(fileName,'w') as f:
+    with open(fileName,'w',encoding="utf8") as f:
         f.write(content)
 
