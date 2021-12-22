@@ -34,7 +34,7 @@ def export_notion_file(data, fileName):
         notes = list(set([x[0] for x in data[bookName]]))
         # print(data[bookName])
         # print(*notes,"\n\n\n",sep="\n\n\n")
-        content += ("--- \n\n## **"+bookName.replace("\ufeff","") +"**"+ "\n>" + "\n>\n\n>".join(notes) +"\n\n\n\n")
+        content += ("--- \n\n## **"+bookName.replace("\ufeff","") +"**"+ "\n-" + "\n\n-".join(notes) +"\n\n\n\n")
 
         # print("*-*-*-*-*-*-*"*5)
     with open(fileName,'w',encoding="utf8") as f:
