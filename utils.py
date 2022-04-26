@@ -19,6 +19,15 @@ quote_sytle="""
 """
 
 def read_file(file_name, sep):
+    """Read My_Clippings file
+
+    Args:
+        file_name (str): file to read
+        sep (str): separator for books
+
+    Returns:
+        List: List of book highlights
+    """
     with open(file_name,"r",encoding="utf8") as f:
         content = f.read().split(sep)
         content = [s.strip() for s in content] # remove trailing spaces
@@ -26,6 +35,11 @@ def read_file(file_name, sep):
         return list(filter(lambda x:len(x)!=0, bookList))
 
 def process_books(hiList):
+    """Extract and preporcess book_data
+
+    Returns:
+        Dict: {book_name, date, authors}
+    """
     bookList = {}
     for cur in hiList:
         bookName = cur[0]
@@ -44,6 +58,8 @@ def process_books(hiList):
     return bookList
 
 def export_notion_file(data, fileName):
+    """Return markdown file in Notion Supported Format
+    """
     bookNames = list(data.keys())
     content = ""
 
@@ -51,13 +67,17 @@ def export_notion_file(data, fileName):
         notes = list(set([x[0] for x in data[bookName]]))
         # print(data[bookName])
         # print(*notes,"\n\n\n",sep="\n\n\n")
-        content += ("--- \n\n## **"+bookName.replace("\ufeff","") +"**"+ "\n-" + "\n\n-".join(notes) +"\n\n\n\n")
+        content += ("--- \n\n## **"+bookName.replace("\ufeff","") +"**"+ "\n-" + "\n\n-".join(notes) +"\n\n\n\n<br><br>")
 
         # print("*-*-*-*-*-*-*"*5)
     with open(fileName,'w',encoding="utf8") as f:
         f.write(content)
 
 def export_markdown_file(data, fileName, return_content_only=False):
+    """Convert book_highlights into markdown supportable format
+    
+    """
+
     quote_sytle="""
     <style type="text/css">
         blockquote { font: 14px normal helvetica, sans-serif;
@@ -77,7 +97,6 @@ def export_markdown_file(data, fileName, return_content_only=False):
         notes = list(set([x[0] for x in data[book_name]]))
         content += ("--- \n\n# "+book_name.replace("\ufeff","") +""+ "\n"+"*Author: "+author_name+"*"+"\n> " + "\n\n> ".join(notes) +"\n\n\n\n")
     
-    # content = quote_sytle+content # add left border
     if return_content_only:
         return content
     
@@ -86,6 +105,12 @@ def export_markdown_file(data, fileName, return_content_only=False):
 
 
 def markdown_to_pdf(md_file_name="output/output.md", pdf_name="output/output.pdf"):
+    """Convert Markdown file to PDF
+
+    Args:
+        md_file_name (str, optional): _description_. Defaults to "output/output.md".
+        pdf_name (str, optional): _description_. Defaults to "output/output.pdf".
+    """
     # Markdown to HTML
     markdown.markdownFromFile(
         input=md_file_name,
@@ -100,7 +125,14 @@ def markdown_to_pdf(md_file_name="output/output.md", pdf_name="output/output.pdf
         source_html =quote_sytle+ f.read()
     pisa_status = pisa.CreatePDF(source_html, dest=result_file) 
     result_file.close()
+
     
 def convert_to_pdf(content, pdf_file_name="output.pdf"):
+    """Complete Pipeline : Data -> MD -> HTML -> PDF
+
+    Args:
+        content : Contents of preprocessed MyClippings.txt file
+        pdf_file_name (str, optional): _description_. Defaults to "output.pdf".
+    """
     export_markdown_file(content,"output/output.md")
     markdown_to_pdf()

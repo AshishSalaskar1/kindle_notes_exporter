@@ -11,18 +11,18 @@ ALLOWED_EXTENSIONS = {'txt'}
 app = Flask(__name__)
 cors = CORS(app)
 
-# hiList = read_file(file_name, sep)
-# noteList = process_books(hiList)
-# export_notion_file(noteList, "output.txt")
 
 @app.route('/')
 def hello():
-    print("Hello")
     return render_template('index.html', url=request.base_url)
 
 @app.route('/upload', methods = ['GET', 'POST'])
 def upload_file():
-    print("CALLED")
+    """Reads uploaded file and returns PDF via Markdown Conversion
+
+    Returns:
+        File: PDF file which contains the converted Kindle Highlights File 
+    """
     if request.method == 'POST':
         f = request.files['file']
         f.save("output/My_Clippings.txt")
