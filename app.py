@@ -1,6 +1,6 @@
 import os
 from flask.helpers import send_file, send_from_directory
-from utils import export_notion_file, read_file, process_books
+from utils import export_notion_file, read_file, process_books, convert_to_pdf
 from flask import Flask, flash, request, redirect, url_for, render_template
 from flask_cors import CORS, cross_origin
 
@@ -28,9 +28,9 @@ def upload_file():
         f.save("output/My_Clippings.txt")
 
         content = process_books(read_file("output/My_Clippings.txt",sep))
-        export_notion_file(content, "output/output.txt")
+        convert_to_pdf(content)
         # return send_from_directory(directory="output", filename="output.txt")
-        return send_file("output/output.txt", as_attachment=True)
+        return send_file("output/output.pdf", as_attachment=True)
 
 if __name__ == '__main__':
     print("App started Succesfully")
